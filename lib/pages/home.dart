@@ -7,6 +7,44 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 3,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 0.5),
+            itemCount: 4,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {},
+                child: GridTile(
+                  // ignore: sort_child_properties_last
+                  child: Stack(children: [
+                    Positioned(
+                      right: 10,
+                      left: 10,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(55),
+                          child: Image.asset("assets/images/1.jpg")),
+                    ),
+                  ]),
+                  footer: GridTileBar(
+                    backgroundColor: const Color.fromARGB(66, 73, 127, 110),
+                    trailing: IconButton(
+                        color: const Color.fromARGB(255, 62, 94, 70),
+                        onPressed: () {},
+                        icon: const Icon(Icons.add)),
+                    leading: const Text("\$12.99"),
+                    title: const Text(
+                      "car",
+                    ),
+                  ),
+                ),
+              );
+            }),
+      ),
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
