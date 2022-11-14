@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce_app/pages/details_screen.dart';
+import 'package:flutter_e_commerce_app/provider/cart.dart';
 import 'package:flutter_e_commerce_app/shared/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../model/item.dart';
 
@@ -29,18 +31,23 @@ class Home extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Details(product: itemes[index]),
+                            builder: (context) =>
+                                Details(product: itemes[index]),
                           ),
                         );
                       },
                       child: Image.asset(itemes[index].imgPath)),
                   footer: GridTileBar(
                     backgroundColor: const Color.fromARGB(66, 73, 127, 110),
-                    trailing: IconButton(
-                        color: const Color.fromARGB(255, 62, 94, 70),
-                        onPressed: () {},
-                        icon: const Icon(Icons.add)),
-                    leading: const Text("\$10000"),
+                    trailing: Consumer<Cart>(builder: ((context, Cartt, child) {
+                      return IconButton(
+                          color: const Color.fromARGB(255, 62, 94, 70),
+                          onPressed: () {
+                            Cartt.add(itemes[index]);
+                          },
+                          icon: const Icon(Icons.add));
+                    })),
+                    leading:  Text("\$ ${itemes[index].price}"),
                     title: const Text(
                       "",
                     ),
@@ -101,32 +108,37 @@ class Home extends StatelessWidget {
         backgroundColor: appbarGreen,
         title: const Text("Home"),
         actions: [
-          Row(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                      // ignore: prefer_const_constructors, sort_child_properties_last
-                      child: Text(
-                        "8",
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0)),
-                      ),
-                      padding: const EdgeInsets.all(5),
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(211, 164, 255, 193),
-                          shape: BoxShape.circle)),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add_shopping_cart)),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: Text("\$ 128"),
-              )
-            ],
-          )
+          Consumer<Cart>(builder: ((context, classInstancee, child) {
+            return Row(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                        // ignore: prefer_const_constructors, sort_child_properties_last
+                        child: Text(
+                          "${classInstancee.selectedProducts.length}",
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                            color: Color.fromARGB(211, 164, 255, 193),
+                            shape: BoxShape.circle)),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_shopping_cart)),
+                  ],
+                ),
+                 Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Text(
+                    "\$ ${classInstancee.price}",
+                  ),
+                ),
+              ],
+            );
+            
+          })),
         ],
       ),
     );
