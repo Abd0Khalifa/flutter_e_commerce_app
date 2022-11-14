@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce_app/pages/details_screen.dart';
 import 'package:flutter_e_commerce_app/shared/colors.dart';
 
 import '../model/item.dart';
@@ -24,14 +25,22 @@ class Home extends StatelessWidget {
                 child: GridTile(
                   // ignore: sort_child_properties_last
                   child: GestureDetector(
-                      onTap: () {}, child: Image.asset(itemes[index].imgPath)),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Details(product: itemes[index]),
+                          ),
+                        );
+                      },
+                      child: Image.asset(itemes[index].imgPath)),
                   footer: GridTileBar(
                     backgroundColor: const Color.fromARGB(66, 73, 127, 110),
                     trailing: IconButton(
                         color: const Color.fromARGB(255, 62, 94, 70),
                         onPressed: () {},
                         icon: const Icon(Icons.add)),
-                    leading: const Text("\$12.99"),
+                    leading: const Text("\$10000"),
                     title: const Text(
                       "",
                     ),
@@ -120,7 +129,6 @@ class Home extends StatelessWidget {
           )
         ],
       ),
-    
     );
   }
 }
