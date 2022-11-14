@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce_app/shared/colors.dart';
 
+import '../model/item.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -12,24 +14,17 @@ class Home extends StatelessWidget {
         child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 3 / 3,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 0.5),
-            itemCount: 4,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 33),
+            itemCount: itemes.length,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {},
                 child: GridTile(
                   // ignore: sort_child_properties_last
-                  child: Stack(children: [
-                    Positioned(
-                      right: 10,
-                      left: 10,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(55),
-                          child: Image.asset("assets/images/1.jpg")),
-                    ),
-                  ]),
+                  child: GestureDetector(
+                      onTap: () {}, child: Image.asset(itemes[index].imgPath)),
                   footer: GridTileBar(
                     backgroundColor: const Color.fromARGB(66, 73, 127, 110),
                     trailing: IconButton(
@@ -38,7 +33,7 @@ class Home extends StatelessWidget {
                         icon: const Icon(Icons.add)),
                     leading: const Text("\$12.99"),
                     title: const Text(
-                      "car",
+                      "",
                     ),
                   ),
                 ),
@@ -125,6 +120,7 @@ class Home extends StatelessWidget {
           )
         ],
       ),
+    
     );
   }
 }
