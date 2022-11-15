@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce_app/model/item.dart';
 
+import '../shared/appbar.dart';
 import '../shared/colors.dart';
 
 class Details extends StatefulWidget {
@@ -21,34 +22,7 @@ class _DetailsState extends State<Details> {
       appBar: AppBar(
         backgroundColor: appbarGreen,
         title: const Text("Details Screen"),
-        actions: [
-          Row(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                      // ignore: prefer_const_constructors, sort_child_properties_last
-                      child: Text(
-                        "8",
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0)),
-                      ),
-                      padding: const EdgeInsets.all(5),
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(211, 164, 255, 193),
-                          shape: BoxShape.circle)),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add_shopping_cart)),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: Text("\$ 128"),
-              )
-            ],
-          )
-        ],
+        actions: const [ProductsAndPrice()],
       ),
       body: SingleChildScrollView(
         child: Column(

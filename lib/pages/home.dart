@@ -5,12 +5,16 @@ import 'package:flutter_e_commerce_app/shared/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../model/item.dart';
+import '../shared/appbar.dart';
+import 'checkout.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartt = Provider.of<Cart>(context);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
@@ -39,15 +43,13 @@ class Home extends StatelessWidget {
                       child: Image.asset(itemes[index].imgPath)),
                   footer: GridTileBar(
                     backgroundColor: const Color.fromARGB(66, 73, 127, 110),
-                    trailing: Consumer<Cart>(builder: ((context, Cartt, child) {
-                      return IconButton(
-                          color: const Color.fromARGB(255, 62, 94, 70),
-                          onPressed: () {
-                            Cartt.add(itemes[index]);
-                          },
-                          icon: const Icon(Icons.add));
-                    })),
-                    leading:  Text("\$ ${itemes[index].price}"),
+                    trailing: IconButton(
+                        color: const Color.fromARGB(255, 62, 94, 70),
+                        onPressed: () {
+                          cartt.add(itemes[index]);
+                        },
+                        icon: const Icon(Icons.add)),
+                    leading: Text("\$ ${itemes[index].price}"),
                     title: const Text(
                       "",
                     ),
@@ -81,11 +83,25 @@ class Home extends StatelessWidget {
                 ListTile(
                     title: const Text("Home"),
                     leading: const Icon(Icons.home),
-                    onTap: () {}),
+                    onTap: () {
+                      Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Home(),
+                    ),
+                  );
+                    }),
                 ListTile(
                     title: const Text("My products"),
                     leading: const Icon(Icons.add_shopping_cart),
-                    onTap: () {}),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CheckOut(),
+                        ),
+                      );
+                    }),
                 ListTile(
                     title: const Text("About"),
                     leading: const Icon(Icons.help_center),
@@ -107,39 +123,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: appbarGreen,
         title: const Text("Home"),
-        actions: [
-          Consumer<Cart>(builder: ((context, classInstancee, child) {
-            return Row(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                        // ignore: prefer_const_constructors, sort_child_properties_last
-                        child: Text(
-                          "${classInstancee.selectedProducts.length}",
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                        padding: const EdgeInsets.all(5),
-                        decoration: const BoxDecoration(
-                            color: Color.fromARGB(211, 164, 255, 193),
-                            shape: BoxShape.circle)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add_shopping_cart)),
-                  ],
-                ),
-                 Padding(
-                  padding: EdgeInsets.only(right: 12),
-                  child: Text(
-                    "\$ ${classInstancee.price}",
-                  ),
-                ),
-              ],
-            );
-            
-          })),
-        ],
+        actions: const [ProductsAndPrice()],
       ),
     );
   }
